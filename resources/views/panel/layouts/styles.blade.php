@@ -10,3 +10,12 @@
 <link rel="stylesheet" href="{{ asset('panel/assets/plugins/fontawesome/css/all.min.css') }}">
 
 <link rel="stylesheet" href="{{ asset('panel/assets/css/style.css') }}">
+
+{{-- Additional Styles  --}}
+
+<link rel="stylesheet" href="{{asset('panel/assets/css/feather.css')}}">
+<link rel="stylesheet" href="{{asset('panel/assets/plugins/summernote/summernote-bs4.min.css')}}">
+
+<link rel="stylesheet" href="{{asset('panel/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}">
+
+<link rel="stylesheet" href="{{asset('panel/assets/css/dataTables.bootstrap5.min.css')}}"

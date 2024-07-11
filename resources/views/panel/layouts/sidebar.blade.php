@@ -8,7 +8,7 @@
                         <li class="submenu">
                             <a href="javascript:void(0);" class="subdrop active"><i data-feather="grid"></i><span>Dashboard</span><span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="index-2.html" class="active">Admin Dashboard</a></li>
+                                <li><a href="{{ route('admin.dashboard') }}" class="active">Admin Dashboard</a></li>
                                 <li><a href="sales-dashboard.html">Sales Dashboard</a></li>
                             </ul>
                         </li>
@@ -35,7 +35,7 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Inventory</h6>
                     <ul>
-                        <li><a href="product-list.html"><i data-feather="box"></i><span>Products</span></a></li>
+                        <li><a href="{{ route('product.index') }}"><i data-feather="box"></i><span>Products</span></a></li>
                         <li><a href="add-product.html"><i data-feather="plus-square"></i><span>Create Product</span></a></li>
                         <li><a href="expired-products.html"><i data-feather="codesandbox"></i><span>Expired Products</span></a></li>
                         <li><a href="low-stocks.html"><i data-feather="trending-down"></i><span>Low Stocks</span></a></li>
