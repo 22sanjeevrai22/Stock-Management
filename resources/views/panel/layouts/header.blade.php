@@ -1,8 +1,8 @@
 <div class="header">
 
             <div class="header-left active">
-                <a href="index-2.html" class="logo logo-normal">
-                    <img src="assets/img/logo.png" alt>
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-normal">
+                    <img src="{{ asset('panel/assets/img/logo.png') }}" alt>
                 </a>
                 <a href="index-2.html" class="logo logo-white">
                     <img src="assets/img/logo-white.png" alt>
