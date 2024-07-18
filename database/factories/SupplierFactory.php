@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +16,15 @@ class SupplierFactory extends Factory
      */
     public function definition(): array
     {
+        $supplierName = $this->faker->unique()->company;
         return [
-            //
+            'name' => $supplierName,
+            'slug' => Str::slug($supplierName),
+            'contact' => $this->faker->phoneNumber,
+            'email' => $this->faker->email,
+            'address' => $this->faker->address,
+
+
         ];
     }
 }

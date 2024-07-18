@@ -20,5 +20,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'sasuke@gmail.com',
             'password' => bcrypt('sasuke')
         ]);
+
+        $this->call([
+            CategorySeeder::class,
+            BrandSeeder::class,
+            SupplierSeeder::class,
+            // ProductSeeder should be below above Seeder
+            ProductSeeder::class,
+        ]);
     }
 }
