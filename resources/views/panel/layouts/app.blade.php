@@ -32,6 +32,7 @@
 
 
     @include('panel.layouts.scripts')
+    @yield('bottom-scripts')
 </body>
 
 
