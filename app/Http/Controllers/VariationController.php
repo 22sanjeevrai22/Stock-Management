@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Variation;
+use App\Http\Requests\StoreVariationRequest;
+use App\Http\Requests\UpdateVariationRequest;
 
-class CategoryController extends Controller
+class VariationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::where('parent_category_id', null)->get();;
-        return view('panel.categories.index', compact('categories'));
+        //
     }
 
     /**
@@ -28,7 +27,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreVariationRequest $request)
     {
         //
     }
@@ -36,7 +35,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Variation $variation)
     {
         //
     }
@@ -44,7 +43,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Variation $variation)
     {
         //
     }
@@ -52,7 +51,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateVariationRequest $request, Variation $variation)
     {
         //
     }
@@ -60,7 +59,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Variation $variation)
     {
         //
     }
