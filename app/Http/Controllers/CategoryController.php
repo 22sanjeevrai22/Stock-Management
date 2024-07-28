@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        // return view('panel.categories.create');
     }
 
     /**
@@ -30,7 +30,16 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'status' => $request->status,
+        ];
+
+        Category::create($data);
+        return redirect()->back()->with('success', 'Category Created Successfully');
+
     }
 
     /**

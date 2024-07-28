@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="{{ asset('panel/assets/plugins/fontawesome/css/all.min.css') }}">
 
 <link rel="stylesheet" href="{{ asset('panel/assets/css/style.css') }}">
-
+<link rel="stylesheet" href="{{ asset('panel/assets/plugins/toastr/toatr.css') }}">
 {{-- Additional Styles  --}}
 
 <link rel="stylesheet" href="{{asset('panel/assets/css/feather.css')}}">

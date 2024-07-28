@@ -32,8 +32,7 @@
             </ul>
             <div class="page-btn">
                 <a href="#" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-category"><i
-                        data-feather="plus-circle" class="me-2"></i>Add New
-                    Category</a>
+                        data-feather="plus-circle" class="me-2"></i>Add New Categoryy</a>
             </div>
         </div>
 
@@ -123,6 +122,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @foreach ($categories as $category)
                                 <tr>
                                     <td>
@@ -155,17 +155,165 @@
                                 </tr>
                             @endforeach
 
-
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="add-category">
+        <div class="modal-dialog modal-dialog-centered custom-modal-two">
+            <div class="modal-content">
+                <div class="page-wrapper-new p-0">
+                    <div class="content">
+                        <div class="modal-header border-0 custom-modal-header">
+                            <div class="page-title">
+                                <h4>Create Category</h4>
+                            </div>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body custom-modal-body">
+                            <form action="{{ route('category.store') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label">Category</label>
+                                        <input name="name" type="text" class="form-control" required />
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label">Category Slug</label>
+                                        <input name="slug" type="text" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <div class="input-blocks summer-description-box transfer mb-3">
+                                        <label>Description</label>
+                                        <textarea class="form-control h-100" rows="5"></textarea>
+                                        <p class="mt-1">Maximum 60 Characters</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="add-choosen">
+                                        <div class="input-blocks">
+                                            <div class="image-upload">
+                                                <input class="upload-image" type="file" name="cover"
+                                                    id="cover" />
+                                                <div class="image-uploads">
+                                                    <i data-feather="plus-circle" class="plus-down-add me-0"></i>
+                                                    <h4>Add Images</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="phone-img">
+                                            <img id="preview_image"
+                                                src="https://th.bing.com/th/id/R.7a46c40eff6061c149d6c442cead3ddf?rik=P7RmvAdzYGMcXQ&pid=ImgRaw&rr=0&sres=1&sresct=1"
+                                                alt="image" />
+                                            <a href="javascript:void(0);"><i data-feather="x"
+                                                    class="x-square-add remove-product"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-0">
+                                    <div
+                                        class="status-toggle modal-status d-flex justify-content-between align-items-center">
+                                        <span class="status-label">Status</span>
+                                        <input type="hidden" name="status" value="0" />
+                                        <input type="checkbox" name="status" id="category_status" class="check"
+                                            value="1" checked />
+                                        <label for="category_status" class="checktoggle"></label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer-btn">
+                                    <button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-submit">
+                                        Create
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit-category">
+        <div class="modal-dialog modal-dialog-centered custom-modal-two">
+            <div class="modal-content">
+                <div class="page-wrapper-new p-0">
+                    <div class="content">
+                        <div class="modal-header border-0 custom-modal-header">
+                            <div class="page-title">
+                                <h4>Edit Category</h4>
+                            </div>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body custom-modal-body">
+                            <form action="https://dreamspos.dreamstechnologies.com/html/template/category-list.html">
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <input type="text" class="form-control" value="Laptop" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Category Slug</label>
+                                    <input type="text" class="form-control" value="laptop" />
+                                </div>
+                                <div class="mb-0">
+                                    <div
+                                        class="status-toggle modal-status d-flex justify-content-between align-items-center">
+                                        <span class="status-label">Status</span>
+                                        <input type="checkbox" id="user3" class="check" checked />
+                                        <label for="user3" class="checktoggle"></label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer-btn">
+                                    <button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-submit">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Toast Html --}}
+    {{-- @if (session('success'))
+        <div class="toast-container position-fixed top-50 end-0 translate-middle-y p-3">
+            <div id="middleright-Toast" class="toast colored-toast bg-primary-transparent text-primary" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-primary text-fixed-white">
+                    <strong class="me-auto">Toast</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">toastr.success("{{ session('success') }}");</div>
+            </div>
+        </div>
+    @endif --}}
 @endsection
 
+
+
 @section('bottom-scripts')
+    <!-- Toast JavaScript -->
+
+    <script src="{{ asset('panel/assets/plugins/toastr/toastr.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> --}}
     <script src="{{ asset('panel/assets/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('panel/assets/js/dataTables.bootstrap5.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('panel/assets/plugins/summernote/summernote-bs4.min.js') }}" type="text/javascript"></script>
@@ -176,5 +324,21 @@
     <script src="{{ asset('panel/assets/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('panel/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js') }}" type="text/javascript">
+    </script>
+    <script>
+        document.getElementById('cover').addEventListener('change', function(e) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('preview_image').src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        @if (session('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
+        @if (session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
     </script>
 @endsection
