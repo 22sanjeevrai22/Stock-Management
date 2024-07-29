@@ -24,7 +24,9 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'slug' =>  'required|min:3',
-            'status' => 'required|boolean'
+            'description' => 'min:3|max:60',
+            'status' => 'required|boolean',
+            'cover' => 'nullable|file|mimes:jpg,jpeg,png',
         ];
     }
 }

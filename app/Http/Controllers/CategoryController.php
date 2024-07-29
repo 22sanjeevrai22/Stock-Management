@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class CategoryController extends Controller
 {
@@ -13,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('parent_category_id', null)->get();;
+        $categories = Category::where('parent_category_id', null)->get();
         return view('panel.categories.index', compact('categories'));
     }
 
@@ -37,9 +40,20 @@ class CategoryController extends Controller
             'status' => $request->status,
         ];
 
-        Category::create($data);
-        return redirect()->back()->with('success', 'Category Created Successfully');
+        $category = Category::create($data);
 
+        if ($request->hasFile('cover')) {
+            try{
+            $category->addMediaFromRequest('cover')
+                            ->usingName(Str::slug($request->name))
+                            ->toMediaCollection('cover');
+            }catch(FileDoesNotExist $e){
+            }catch(FileIsTooBig $e){
+
+            }
+
+            return back()->with('success', 'Category Created Successfully');
+        }
     }
 
     /**
@@ -55,7 +69,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return response()->json($category);
     }
 
     /**

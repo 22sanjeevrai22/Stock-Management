@@ -116,6 +116,7 @@
                                 </th>
                                 <th>Category</th>
                                 <th>Category slug</th>
+                                <th>Cover</th>
                                 <th>Created On</th>
                                 <th>Status</th>
                                 <th class="no-sort">Action</th>
@@ -133,6 +134,14 @@
                                     </td>
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->slug }}</td>
+                                    <td>
+                                        @if ($category->getFirstMedia('cover'))
+                                            <img src="{{ $category->getFirstMedia('cover')->getUrl('preview') }}"
+                                                alt="coverr">
+                                        @else
+                                            No cover image available
+                                        @endif
+                                    </td>
                                     <td>{{ $category->created_at }}</td>
                                     <td>
                                         @if ($category->status == 1)
@@ -143,8 +152,8 @@
                                     </td>
                                     <td class="action-table-data">
                                         <div class="edit-delete-action">
-                                            <a class="me-2 p-2" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#edit-category">
+                                            <a class="me-2 p-2" onclick="editCategory({{ $category->id }})"
+                                                href="" data-bs-toggle="modal" data-bs-target="#edit-category">
                                                 <i data-feather="edit" class="feather-edit"></i>
                                             </a>
                                             <a class="confirm-text p-2" href="javascript:void(0);">
@@ -175,24 +184,36 @@
                             </button>
                         </div>
                         <div class="modal-body custom-modal-body">
-                            <form action="{{ route('category.store') }}" method="POST">
+                            <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-6 mb-3">
                                         <label class="form-label">Category</label>
-                                        <input name="name" type="text" class="form-control" required />
+                                        <input name="name" type="text" value="{{ old('name') }}"
+                                            class="form-control @error('name') is-invalid @enderror" required />
+                                        @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="col-6 mb-3">
                                         <label class="form-label">Category Slug</label>
-                                        <input name="slug" type="text" class="form-control" required />
+                                        <input name="slug" type="text" value="{{ old('slug') }}"
+                                            class="form-control @error('slug') is-invalid @enderror" required />
+                                        @error('slug')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-12 mb-3">
                                     <div class="input-blocks summer-description-box transfer mb-3">
                                         <label>Description</label>
-                                        <textarea class="form-control h-100" rows="5"></textarea>
+                                        <textarea class="form-control h-100 @error('description') is-invalid @enderror" rows="5" name="description"
+                                            required>{{ old('description') }}</textarea>
                                         <p class="mt-1">Maximum 60 Characters</p>
+                                        @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -226,7 +247,7 @@
                                         <span class="status-label">Status</span>
                                         <input type="hidden" name="status" value="0" />
                                         <input type="checkbox" name="status" id="category_status" class="check"
-                                            value="1" checked />
+                                            value="1" {{ old('status', 1) ? 'checked' : '' }} />
                                         <label for="category_status" class="checktoggle"></label>
                                     </div>
                                 </div>
@@ -253,28 +274,79 @@
                     <div class="content">
                         <div class="modal-header border-0 custom-modal-header">
                             <div class="page-title">
-                                <h4>Edit Category</h4>
+                                <h4>Create Category</h4>
                             </div>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body custom-modal-body">
-                            <form action="https://dreamspos.dreamstechnologies.com/html/template/category-list.html">
-                                <div class="mb-3">
-                                    <label class="form-label">Category</label>
-                                    <input type="text" class="form-control" value="Laptop" />
+                            <form action="#" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label">Category</label>
+                                        <input name="name" type="text" value="{{ old('name') }}"
+                                            class="form-control @error('name') is-invalid @enderror" required />
+                                        @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label">Category Slug</label>
+                                        <input name="slug" type="text" value="{{ old('slug') }}"
+                                            class="form-control @error('slug') is-invalid @enderror" required />
+                                        @error('slug')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Category Slug</label>
-                                    <input type="text" class="form-control" value="laptop" />
+
+                                <div class="col-12 mb-3">
+                                    <div class="input-blocks summer-description-box transfer mb-3">
+                                        <label>Description</label>
+                                        <textarea class="form-control h-100 @error('description') is-invalid @enderror" rows="5" name="description"
+                                            required>{{ old('description') }}</textarea>
+                                        <p class="mt-1">Maximum 60 Characters</p>
+                                        @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="add-choosen">
+                                        <div class="input-blocks">
+                                            <div class="image-upload">
+                                                <input class="upload-image" type="file" name="cover"
+                                                    id="cover" />
+                                                <div class="image-uploads">
+                                                    <i data-feather="plus-circle" class="plus-down-add me-0"></i>
+                                                    <h4>Add Images</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="phone-img">
+                                            <img id="preview_image"
+                                                src="https://th.bing.com/th/id/R.7a46c40eff6061c149d6c442cead3ddf?rik=P7RmvAdzYGMcXQ&pid=ImgRaw&rr=0&sres=1&sresct=1"
+                                                alt="image" />
+                                            <a href="javascript:void(0);"><i data-feather="x"
+                                                    class="x-square-add remove-product"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="mb-0">
                                     <div
                                         class="status-toggle modal-status d-flex justify-content-between align-items-center">
                                         <span class="status-label">Status</span>
-                                        <input type="checkbox" id="user3" class="check" checked />
-                                        <label for="user3" class="checktoggle"></label>
+                                        <input type="hidden" name="status" value="0" />
+                                        <input type="checkbox" name="status" id="category_status" class="check"
+                                            value="1" {{ old('status', 1) ? 'checked' : '' }} />
+                                        <label for="category_status" class="checktoggle"></label>
                                     </div>
                                 </div>
                                 <div class="modal-footer-btn">
@@ -282,7 +354,7 @@
                                         Cancel
                                     </button>
                                     <button type="submit" class="btn btn-submit">
-                                        Save Changes
+                                        Create
                                     </button>
                                 </div>
                             </form>
@@ -334,11 +406,44 @@
             reader.readAsDataURL(e.target.files[0]);
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            @if ($errors->any())
+                $('#add-category').modal('show');
+            @endif
+        });
+
         @if (session('success'))
             toastr.success("{{ session('success') }}");
         @endif
         @if (session('error'))
             toastr.error("{{ session('error') }}");
         @endif
+    </script>
+    <script>
+        function editCategory(categoryId) {
+            $.get('/categories/' + categoryId + '/edit', function(data) {
+                // Set the form action to the update route for this category
+                $('#edit-category-form').attr('action', '/categories/' + data.id);
+
+                // Populate the form fields with the current category data
+                $('#edit_category_id').val(data.id);
+                $('#edit_name').val(data.name);
+                $('#edit_slug').val(data.slug);
+                $('#edit_description').val(data.description);
+
+                // Set the status checkbox
+                $('#edit_category_status').prop('checked', data.status === 1);
+
+                // Update the preview image if available
+                if (data.cover_url) {
+                    $('#edit_preview_image').attr('src', data.cover_url);
+                } else {
+                    $('#edit_preview_image').attr('src', 'default-image-url'); // Optional: Set to a default image
+                }
+
+                // Show the edit modal
+                $('#edit-category').modal('show');
+            });
+        }
     </script>
 @endsection

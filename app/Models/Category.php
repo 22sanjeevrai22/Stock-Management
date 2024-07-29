@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\Product;
 use App\Models\Variation;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Category extends Model
+class Category extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
     protected $guarded = [];
@@ -46,7 +47,6 @@ class Category extends Model
             ->keepOriginalImageFormat()
             ->nonQueued();
     }
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('cover')
