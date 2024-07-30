@@ -69,7 +69,14 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return response()->json($category);
+        return response()->json([
+            'id' => $category->id,
+            'name' => $category->name,
+            'slug' => $category->slug,
+            'description' => $category->description,
+            'status' => $category->status,
+            'cover_url' => $category->getFirstMediaUrl('cover', 'preview') ?: null,
+        ]);
     }
 
     /**

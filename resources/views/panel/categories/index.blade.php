@@ -274,29 +274,29 @@
                     <div class="content">
                         <div class="modal-header border-0 custom-modal-header">
                             <div class="page-title">
-                                <h4>Create Category</h4>
+                                <h4>Edit Category</h4>
                             </div>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body custom-modal-body">
-                            <form action="#" method="POST" enctype="multipart/form-data">
+                            <form id="edit-category-form" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="category_id" id="edit_category_id">
+
                                 <div class="row">
                                     <div class="col-6 mb-3">
                                         <label class="form-label">Category</label>
-                                        <input name="name" type="text" value="{{ old('name') }}"
-                                            class="form-control @error('name') is-invalid @enderror" required />
+                                        <input name="name" type="text" id="edit_name" class="form-control @error('name') is-invalid @enderror" required />
                                         @error('name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-6 mb-3">
                                         <label class="form-label">Category Slug</label>
-                                        <input name="slug" type="text" value="{{ old('slug') }}"
-                                            class="form-control @error('slug') is-invalid @enderror" required />
+                                        <input name="slug" type="text" id="edit_slug" class="form-control @error('slug') is-invalid @enderror" required />
                                         @error('slug')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -306,8 +306,7 @@
                                 <div class="col-12 mb-3">
                                     <div class="input-blocks summer-description-box transfer mb-3">
                                         <label>Description</label>
-                                        <textarea class="form-control h-100 @error('description') is-invalid @enderror" rows="5" name="description"
-                                            required>{{ old('description') }}</textarea>
+                                        <textarea class="form-control h-100 @error('description') is-invalid @enderror" rows="5" name="description" id="edit_description" required></textarea>
                                         <p class="mt-1">Maximum 60 Characters</p>
                                         @error('description')
                                             <span class="text-danger">{{ $message }}</span>
@@ -315,47 +314,35 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-lg-12">
                                     <div class="add-choosen">
                                         <div class="input-blocks">
                                             <div class="image-upload">
-                                                <input class="upload-image" type="file" name="cover"
-                                                    id="cover" />
+                                                <input class="upload-image" type="file" name="cover" id="edit_cover" />
                                                 <div class="image-uploads">
                                                     <i data-feather="plus-circle" class="plus-down-add me-0"></i>
                                                     <h4>Add Images</h4>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="phone-img">
-                                            <img id="preview_image"
-                                                src="https://th.bing.com/th/id/R.7a46c40eff6061c149d6c442cead3ddf?rik=P7RmvAdzYGMcXQ&pid=ImgRaw&rr=0&sres=1&sresct=1"
-                                                alt="image" />
-                                            <a href="javascript:void(0);"><i data-feather="x"
-                                                    class="x-square-add remove-product"></i></a>
+                                            <img id="edit_preview_image" src="default-image-url" alt="image" />
+                                            <a href="javascript:void(0);"><i data-feather="x" class="x-square-add remove-product"></i></a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mb-0">
-                                    <div
-                                        class="status-toggle modal-status d-flex justify-content-between align-items-center">
+                                    <div class="status-toggle modal-status d-flex justify-content-between align-items-center">
                                         <span class="status-label">Status</span>
                                         <input type="hidden" name="status" value="0" />
-                                        <input type="checkbox" name="status" id="category_status" class="check"
-                                            value="1" {{ old('status', 1) ? 'checked' : '' }} />
-                                        <label for="category_status" class="checktoggle"></label>
+                                        <input type="checkbox" name="status" id="edit_category_status" class="check" value="1" {{ old('status', 1) ? 'checked' : '' }} />
+                                        <label for="edit_category_status" class="checktoggle"></label>
                                     </div>
                                 </div>
                                 <div class="modal-footer-btn">
-                                    <button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">
-                                        Cancel
-                                    </button>
-                                    <button type="submit" class="btn btn-submit">
-                                        Create
-                                    </button>
+                                    <button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -364,6 +351,7 @@
             </div>
         </div>
     </div>
+
     {{-- Toast Html --}}
     {{-- @if (session('success'))
         <div class="toast-container position-fixed top-50 end-0 translate-middle-y p-3">
@@ -395,13 +383,22 @@
     <script src="{{ asset('panel/assets/js/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('panel/assets/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 
-    <script src="{{ asset('panel/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js') }}" type="text/javascript">
-    </script>
+    <script src="{{ asset('panel/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js') }}" type="text/javascript"></script>
     <script>
         document.getElementById('cover').addEventListener('change', function(e) {
             var reader = new FileReader();
             reader.onload = function(event) {
                 document.getElementById('preview_image').src = event.target.result;
+
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        document.getElementById('cover').addEventListener('change', function(e) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('edit_preview_image').src = event.target.result;
+
             }
             reader.readAsDataURL(e.target.files[0]);
         });
@@ -418,8 +415,7 @@
         @if (session('error'))
             toastr.error("{{ session('error') }}");
         @endif
-    </script>
-    <script>
+
         function editCategory(categoryId) {
             $.get('/categories/' + categoryId + '/edit', function(data) {
                 // Set the form action to the update route for this category
